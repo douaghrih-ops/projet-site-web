@@ -5,355 +5,393 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>La Trattoria - Palmeraie Saveurs</title>
-<style>
-     :root {
-        --color-background: #121212;
-        --color-text: #E0E0E0;
-        --color-primary: #4CAF50;
-        --color-secondary: #E0E0E0;
-        --color-card-bg: #1E1E1E;
-        --color-input-bg: #2C2C2C;
-        --color-border: #333333;
-        --color-star: #FFD700;
-        --color-location: #007bff;
-    }
-
-    * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-        font-family: 'Outfit', sans-serif;
-    }
-
-    body {
-        background-color: var(--color-background);
-        color: var(--color-text);
-        line-height: 1.6;
-    }
-
-    a {
-        color: var(--color-text);
-        text-decoration: none;
-    }
-
-    .container {
-        max-width: 1400px;
-        margin: 0 auto;
-        padding: 30px 50px;
-    }
-
-    /* Navigation */
-    nav {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 15px 50px;
-        border-bottom: 1px solid var(--color-border);
-        background-color: var(--color-card-bg);
-        position: sticky;
-        top: 0;
-        z-index: 1000;
-    }
-
-    .logo {
-        display: flex;
-        align-items: center;
-        font-size: 1.2rem;
-        font-weight: bold;
-        color: var(--color-primary);
-    }
-
-    .logo-icon {
-        margin-right: 8px;
-        font-size: 1.5rem;
-    }
-
-    .nav-links {
-        list-style: none;
-        display: flex;
-    }
-
-    .nav-links li a {
-        margin: 0 15px;
-        transition: color 0.3s;
-    }
-
-    .nav-links li a:hover,
-    .nav-links li a.active {
-        color: var(--color-primary);
-    }
-
-    .cta-button {
-        background-color: var(--color-primary);
-        color: var(--color-background);
-        border: none;
-        padding: 8px 15px;
-        border-radius: 5px;
-        cursor: pointer;
-        font-weight: bold;
-        transition: background-color 0.3s;
-    }
-
-    .cta-button:hover {
-        background-color: #388E3C;
-    }
-
-    /* Header */
-    .page-header {
-        margin-bottom: 30px;
-        text-align: center;
-    }
-
-    .page-header h1 {
-        font-size: 2.5rem;
-        margin-bottom: 5px;
-    }
-
-    .page-header p {
-        color: #A0A0A0;
-    }
-
-    /* Search & Filters */
-    .search-filter-section {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-        margin-bottom: 40px;
-        align-items: center;
-    }
-
-    .search-bar {
-        width: 50%;
-        min-width: 300px;
-    }
-
-    .search-input {
-        width: 100%;
-        padding: 10px 15px;
-        border: 1px solid var(--color-border);
-        background-color: var(--color-input-bg);
-        color: var(--color-text);
-        border-radius: 5px;
-        font-size: 1rem;
-    }
-
-    .filters {
-        display: flex;
-        gap: 10px;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-
-    .filter-btn {
-        background-color: var(--color-input-bg);
-        color: var(--color-text);
-        border: 1px solid var(--color-border);
-        padding: 8px 15px;
-        border-radius: 20px;
-        cursor: pointer;
-        transition: background-color 0.3s, color 0.3s;
-        font-size: 0.9rem;
-    }
-
-    .filter-btn:hover {
-        background-color: #383838;
-    }
-
-    .filter-btn.active {
-        background-color: var(--color-primary);
-        color: var(--color-background);
-        border-color: var(--color-primary);
-    }
-
-    /* Restaurant Grid */
-    .restaurants-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        gap: 30px;
-    }
-
-    /* Force 3 columns on desktop */
-    @media (min-width: 1200px) {
-        .restaurants-grid {
-            grid-template-columns: repeat(3, 1fr);
+    <style>
+        :root {
+            --color-background: #121212;
+            --color-text: #E0E0E0;
+            --color-primary: #4CAF50;
+            --color-secondary: #E0E0E0;
+            --color-card-bg: #1E1E1E;
+            --color-input-bg: #2C2C2C;
+            --color-border: #333333;
+            --color-star: #FFD700;
+            --color-location: #007bff;
         }
-    }
 
-    /* Restaurant Card */
-    .restaurant-card {
-        background-color: var(--color-card-bg);
-        border-radius: 8px;
-        overflow: hidden;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-        position: relative;
-        transition: transform 0.3s;
-        display: flex;
-        flex-direction: column;
-    }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Outfit', sans-serif;
+        }
 
-    .restaurant-card:hover {
-        transform: translateY(-5px);
-    }
+        body {
+            background-color: var(--color-background);
+            color: var(--color-text);
+            line-height: 1.6;
+        }
 
-    .card-image-container {
-        position: relative;
-        height: 200px;
-        overflow: hidden;
-    }
+        a {
+            color: var(--color-text);
+            text-decoration: none;
+        }
 
-    .card-image {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        display: block;
-    }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 30px 50px;
+        }
 
-    .favorite-btn {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        background-color: rgba(0, 0, 0, 0.6);
-        color: var(--color-star);
-        border: none;
-        border-radius: 50%;
-        padding: 8px;
-        cursor: pointer;
-        font-size: 1rem;
-        line-height: 1;
-    }
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 50px;
+            border-bottom: 1px solid var(--color-border);
+            background-color: var(--color-card-bg);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
 
-    .card-content {
-        padding: 15px;
-        flex-grow: 1;
-        display: flex;
-        flex-direction: column;
-    }
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--color-primary);
+        }
 
-    .card-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 5px;
-    }
+        .logo-icon {
+            margin-right: 8px;
+            font-size: 1.5rem;
+        }
 
-    .card-title {
-        font-size: 1.4rem;
-        color: var(--color-text);
-    }
+        .nav-links {
+            list-style: none;
+            display: flex;
+        }
 
-    .card-meta {
-        display: flex;
-        gap: 10px;
-        margin-bottom: 10px;
-    }
+        .nav-links li a {
+            margin: 0 15px;
+            transition: color 0.3s;
+        }
 
-    .cuisine-type {
-        color: var(--color-primary);
-        font-weight: bold;
-    }
+        .nav-links li a:hover,
+        .nav-links li a.active {
+            color: var(--color-primary);
+        }
 
-    .price-range {
-        color: #A0A0A0;
-    }
+        .cta-button {
+            background-color: var(--color-primary);
+            color: var(--color-background);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
 
-    .card-description {
-        font-size: 0.9rem;
-        color: #B0B0B0;
-        margin-bottom: 15px;
-        height: 3.6em;
-        overflow: hidden;
-        display: -webkit-box;
-        webkit-line-clamp: 3;
-        -webkit-box-orient: vertical;
-        flex-grow: 1;
-    }
+        .cta-button:hover {
+            background-color: #388E3C;
+        }
 
-    .card-footer {
-        display: flex;
-        align-items: center;
-        font-size: 0.9rem;
-        color: var(--color-location);
-        margin-top: auto;
-    }
+        /* Hero Section */
+        .restaurant-hero {
+            height: 400px;
+            background-size: cover;
+            background-position: center;
+            background-color: #1a1a1a;
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+            margin-bottom: 40px;
+        }
 
-    .location-icon {
-        margin-right: 5px;
-    }
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.9));
+        }
 
-    .restaurant-card.hidden {
-        display: none;
-    }
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            padding-bottom: 40px;
+        }
 
-    /* Footer */
-    footer {
-        background-color: #1A1A1A;
-        padding: 40px 50px 20px;
-        color: #B0B0B0;
-        border-top: 1px solid var(--color-border);
-        margin-top: 50px;
-    }
+        .back-link {
+            color: #ccc;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
 
-    .footer-content {
-        display: flex;
-        justify-content: space-between;
-        flex-wrap: wrap;
-        gap: 30px;
-        margin-bottom: 30px;
-    }
+        .back-link:hover {
+            color: var(--color-primary);
+        }
 
-    .footer-brand {
-        flex: 2;
-        min-width: 250px;
-    }
+        .hero-title {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            color: #fff;
+        }
 
-    .footer-logo {
-        font-size: 2rem;
-        color: var(--color-primary);
-        margin-bottom: 10px;
-    }
+        .hero-meta {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 1.1rem;
+            color: #ddd;
+        }
 
-    .footer-text {
-        font-size: 0.9rem;
-    }
+        .separator {
+            color: #666;
+        }
 
-    .footer-links {
-        flex: 1;
-        min-width: 150px;
-    }
+        .rating {
+            color: var(--color-star);
+            font-weight: bold;
+        }
 
-    .footer-links h4 {
-        color: var(--color-text);
-        margin-bottom: 15px;
-        font-size: 1.1rem;
-    }
+        /* ========== LAYOUT: Menu Left, Info Right ========== */
+        .details-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 40px;
+        }
 
-    .footer-links ul {
-        list-style: none;
-    }
+        @media (max-width: 992px) {
+            .details-container {
+                grid-template-columns: 1fr;
+            }
+        }
 
-    .footer-links ul li {
-        margin-bottom: 8px;
-    }
+        .section {
+            margin-bottom: 50px;
+        }
 
-    .footer-links ul li a {
-        color: #B0B0B0;
-        font-size: 0.9rem;
-    }
+        .section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--color-primary);
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+        }
 
-    .footer-links ul li a:hover {
-        color: var(--color-primary);
-    }
+        /* Menu Section */
+        .menu-category {
+            margin-bottom: 30px;
+        }
 
-    .footer-bottom {
-        text-align: center;
-        padding-top: 15px;
-        border-top: 1px solid #2C2C2C;
-        font-size: 0.8rem;
-    }
-</style>
+        .menu-category h3 {
+            font-size: 1.2rem;
+            color: #fff;
+            margin-bottom: 15px;
+        }
+
+        .menu-item {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #222;
+            padding-bottom: 15px;
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+
+        .item-name {
+            font-weight: 500;
+            color: #eee;
+        }
+
+        .item-price {
+            color: var(--color-primary);
+            font-weight: bold;
+        }
+
+        .item-desc {
+            font-size: 0.9rem;
+            color: #999;
+        }
+
+        /* Sidebar - Info Card */
+        .info-card {
+            background-color: var(--color-card-bg);
+            padding: 25px;
+            border-radius: 8px;
+            position: sticky;
+            top: 100px;
+        }
+
+        .info-card h3 {
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .info-item {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .info-item .icon {
+            font-size: 1.2rem;
+        }
+
+        .info-item strong {
+            display: block;
+            color: #eee;
+            margin-bottom: 5px;
+        }
+
+        .info-item p {
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+
+        .full-width {
+            width: 100%;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        /* ========== REVIEWS SECTION - FULL WIDTH AT BOTTOM ========== */
+        .reviews-section {
+            margin-top: 50px;
+            padding-top: 40px;
+            border-top: 1px solid var(--color-border);
+        }
+
+        .write-review {
+            background-color: var(--color-card-bg);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .write-review h3 {
+            margin-bottom: 10px;
+        }
+
+        .write-review textarea {
+            width: 100%;
+            height: 100px;
+            background-color: var(--color-input-bg);
+            border: 1px solid var(--color-border);
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            resize: vertical;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .star-rating {
+            margin: 10px 0;
+        }
+
+        .star-rating span {
+            font-size: 1.5rem;
+            color: #555;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .star-rating span:hover {
+            color: var(--color-star);
+        }
+
+        .star-rating span.active {
+            color: var(--color-star);
+        }
+
+        .no-reviews {
+            color: #888;
+            font-style: italic;
+            margin-top: 20px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #1A1A1A;
+            padding: 40px 50px 20px;
+            color: #B0B0B0;
+            border-top: 1px solid var(--color-border);
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-brand {
+            flex: 2;
+            min-width: 250px;
+        }
+
+        .footer-logo {
+            font-size: 2rem;
+            color: var(--color-primary);
+            margin-bottom: 10px;
+        }
+
+        .footer-text {
+            font-size: 0.9rem;
+        }
+
+        .footer-links {
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .footer-links h4 {
+            color: var(--color-text);
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links ul li {
+            margin-bottom: 8px;
+        }
+
+        .footer-links ul li a {
+            color: #B0B0B0;
+            font-size: 0.9rem;
+        }
+
+        .footer-links ul li a:hover {
+            color: var(--color-primary);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 15px;
+            border-top: 1px solid #2C2C2C;
+            font-size: 0.8rem;
+        }
+    </style>
 </head>
 
 <body>
+
+    <!-- Navigation -->
     <nav>
         <div class="logo">
             <div class="logo-icon">🍴</div>
@@ -366,7 +404,8 @@
         </ul>
         <a href="find a table.html" class="cta-button">Trouver une table</a>
     </nav>
-
+aa
+    <!-- Hero Section -->
     <div class="restaurant-hero" style="background-image: url('la trattoria.jpg');">
         <div class="hero-overlay"></div>
         <div class="hero-content container">
@@ -377,119 +416,204 @@
                 <span class="separator">•</span>
                 <span class="cuisine">Italien Traditionnel</span>
                 <span class="separator">•</span>
-                <span class="price">$$</span>
+                <span class="price">$$$</span>
             </div>
         </div>
     </div>
 
+    <!-- Main Content: Menu (LEFT) + Localisation (RIGHT) -->
     <div class="container details-container">
-        <div class="main-content">
-            <section class="section about-section">
-                <h2>À propos</h2>
-                <p>Cuisine italienne familiale et généreuse dans une ambiance chaleureuse. Recettes authentiques
-                    transmises de génération en génération. Notre trattoria vous propose des plats traditionnels
-                    italiens préparés avec amour et des ingrédients frais de qualité.</p>
-                <div class="tags">
-                    <span class="tag">Familial</span>
-                    <span class="tag">Authentique</span>
-                    <span class="tag">Généreux</span>
-                    <span class="tag">Traditionnel</span>
-                </div>
-            </section>
 
+        <!-- LEFT SIDE: Menu -->
+        <div class="main-content">
             <section class="section menu-section">
-                <h2>🍴 Menu</h2>
+                <h2>🍝 Menu</h2>
 
                 <div class="menu-category">
-                    <h3>Antipasti</h3>
+                    <h3>Antipasti (Entrées)</h3>
                     <div class="menu-item">
-                        <div class="item-header"><span class="item-name">Planche de Charcuteries</span><span
-                                class="item-price">70 MAD</span></div>
+                        <div class="item-header">
+                            <span class="item-name">Bruschetta al Pomodoro</span>
+                            <span class="item-price">45 MAD</span>
+                        </div>
+                        <p class="item-desc">Pain grillé, tomates fraîches, basilic, huile d'olive.</p>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-header">
+                            <span class="item-name">Carpaccio di Manzo</span>
+                            <span class="item-price">85 MAD</span>
+                        </div>
+                        <p class="item-desc">Fines tranches de bœuf, roquette, parmesan, câpres.</p>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-header">
+                            <span class="item-name">Planche de Charcuteries</span>
+                            <span class="item-price">70 MAD</span>
+                        </div>
                         <p class="item-desc">Prosciutto, salami, coppa, bresaola.</p>
                     </div>
                     <div class="menu-item">
-                        <div class="item-header"><span class="item-name">Antipasto Végétarien</span><span
-                                class="item-price">60 MAD</span></div>
-                        <p class="item-desc">Légumes grillés, mozzarella, huile d'olive.</p>
+                        <div class="item-header">
+                            <span class="item-name">Antipasto Végétarien</span>
+                            <span class="item-price">60 MAD</span>
+                        </div>
+                        <p class="item-desc">Légumes grillés, mozzarella di bufala, huile d'olive.</p>
                     </div>
                 </div>
 
                 <div class="menu-category">
                     <h3>Pasta</h3>
                     <div class="menu-item">
-                        <div class="item-header"><span class="item-name">Spaghetti Bolognese</span><span
-                                class="item-price">80 MAD</span></div>
-                        <p class="item-desc">Sauce ragù à la viande mijotée 6h.</p>
+                        <div class="item-header">
+                            <span class="item-name">Spaghetti Bolognese</span>
+                            <span class="item-price">80 MAD</span>
+                        </div>
+                        <p class="item-desc">Sauce ragù à la viande mijotée 6 heures.</p>
                     </div>
                     <div class="menu-item">
-                        <div class="item-header"><span class="item-name">Penne all'Amatriciana</span><span
-                                class="item-price">85 MAD</span></div>
-                        <p class="item-desc">Sauce tomate, guanciale, pecorino.</p>
+                        <div class="item-header">
+                            <span class="item-name">Penne all'Arrabbiata</span>
+                            <span class="item-price">70 MAD</span>
+                        </div>
+                        <p class="item-desc">Sauce tomate épicée, ail, piment rouge.</p>
                     </div>
                     <div class="menu-item">
-                        <div class="item-header"><span class="item-name">Fettuccine Alfredo</span><span
-                                class="item-price">90 MAD</span></div>
-                        <p class="item-desc">Crème, parmesan, beurre.</p>
+                        <div class="item-header">
+                            <span class="item-name">Penne all'Amatriciana</span>
+                            <span class="item-price">85 MAD</span>
+                        </div>
+                        <p class="item-desc">Sauce tomate, guanciale, pecorino romano.</p>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-header">
+                            <span class="item-name">Fettuccine Alfredo</span>
+                            <span class="item-price">90 MAD</span>
+                        </div>
+                        <p class="item-desc">Crème fraîche, parmesan, beurre.</p>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-header">
+                            <span class="item-name">Linguine ai Frutti di Mare</span>
+                            <span class="item-price">120 MAD</span>
+                        </div>
+                        <p class="item-desc">Fruits de mer, sauce tomate, vin blanc.</p>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-header">
+                            <span class="item-name">Lasagne della Casa</span>
+                            <span class="item-price">95 MAD</span>
+                        </div>
+                        <p class="item-desc">Lasagnes maison, béchamel, ragù, parmesan.</p>
                     </div>
                 </div>
 
                 <div class="menu-category">
-                    <h3>Secondi</h3>
+                    <h3>Pizza</h3>
                     <div class="menu-item">
-                        <div class="item-header"><span class="item-name">Pollo alla Parmigiana</span><span
-                                class="item-price">110 MAD</span></div>
-                        <p class="item-desc">Poulet pané, sauce tomate, mozzarella.</p>
+                        <div class="item-header">
+                            <span class="item-name">Margherita</span>
+                            <span class="item-price">65 MAD</span>
+                        </div>
+                        <p class="item-desc">Sauce tomate, mozzarella, basilic frais.</p>
                     </div>
                     <div class="menu-item">
-                        <div class="item-header"><span class="item-name">Saltimbocca alla Romana</span><span
-                                class="item-price">130 MAD</span></div>
-                        <p class="item-desc">Escalope de veau, prosciutto, sauge.</p>
+                        <div class="item-header">
+                            <span class="item-name">Quattro Formaggi</span>
+                            <span class="item-price">85 MAD</span>
+                        </div>
+                        <p class="item-desc">Mozzarella, gorgonzola, parmesan, fontina.</p>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-header">
+                            <span class="item-name">Diavola</span>
+                            <span class="item-price">80 MAD</span>
+                        </div>
+                        <p class="item-desc">Salami piquant, mozzarella, piment.</p>
                     </div>
                 </div>
 
                 <div class="menu-category">
-                    <h3>Dolci</h3>
+                    <h3>Secondi (Plats Principaux)</h3>
                     <div class="menu-item">
-                        <div class="item-header"><span class="item-name">Tiramisu</span><span class="item-price">50
-                                MAD</span></div>
+                        <div class="item-header">
+                            <span class="item-name">Pollo alla Parmigiana</span>
+                            <span class="item-price">110 MAD</span>
+                        </div>
+                        <p class="item-desc">Poulet pané, sauce tomate, mozzarella gratinée.</p>
                     </div>
                     <div class="menu-item">
-                        <div class="item-header"><span class="item-name">Panna Cotta</span><span class="item-price">45
-                                MAD</span></div>
+                        <div class="item-header">
+                            <span class="item-name">Saltimbocca alla Romana</span>
+                            <span class="item-price">130 MAD</span>
+                        </div>
+                        <p class="item-desc">Escalope de veau, prosciutto, sauge, vin blanc.</p>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-header">
+                            <span class="item-name">Osso Buco</span>
+                            <span class="item-price">150 MAD</span>
+                        </div>
+                        <p class="item-desc">Jarret de veau braisé, gremolata, risotto.</p>
                     </div>
                 </div>
-            </section>
 
-            <section class="section reviews-section">
-                <h2>Avis</h2>
-                <div class="write-review">
-                    <h3>Écrire un avis</h3>
-                    <div class="star-rating">
-                        <span data-rating="1">⭐</span><span data-rating="2">⭐</span><span data-rating="3">⭐</span><span
-                            data-rating="4">⭐</span><span data-rating="5">⭐</span>
+                <div class="menu-category">
+                    <h3>Dolci (Desserts)</h3>
+                    <div class="menu-item">
+                        <div class="item-header">
+                            <span class="item-name">Tiramisu</span>
+                            <span class="item-price">50 MAD</span>
+                        </div>
+                        <p class="item-desc">Mascarpone, café, biscuits, cacao.</p>
                     </div>
-                    <textarea id="reviewText" placeholder="Partagez votre expérience..."></textarea>
-                    <button class="cta-button" id="submitReview">Envoyer</button>
-                </div>
-                <div id="reviewsList">
-                    <p class="no-reviews">Pas encore d'avis. Soyez le premier à donner votre avis !</p>
+                    <div class="menu-item">
+                        <div class="item-header">
+                            <span class="item-name">Panna Cotta</span>
+                            <span class="item-price">45 MAD</span>
+                        </div>
+                        <p class="item-desc">Crème vanille, coulis de fruits rouges.</p>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-header">
+                            <span class="item-name">Cannoli Siciliani</span>
+                            <span class="item-price">55 MAD</span>
+                        </div>
+                        <p class="item-desc">Tube croustillant, ricotta sucrée, pistaches.</p>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-header">
+                            <span class="item-name">Affogato</span>
+                            <span class="item-price">40 MAD</span>
+                        </div>
+                        <p class="item-desc">Glace vanille, espresso chaud.</p>
+                    </div>
                 </div>
             </section>
         </div>
 
+        <!-- RIGHT SIDE: Localisation & Horaires -->
         <div class="sidebar">
             <div class="info-card">
-                <h3>Localisation & Horaires</h3>
+                <h3>📍 Localisation & Horaires</h3>
                 <div class="info-item">
                     <span class="icon">📍</span>
-                    <div><strong>Guéliz</strong>
-                        <p>Boulevard Mohammed V, Marrakech</p>
+                    <div>
+                        <strong>Rue Mohammed el Beqal</strong>
+                        <p>Boulevard Mohammed V, Guéliz, Marrakech</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <span class="icon">📞</span>
+                    <div>
+                        <strong>Téléphone</strong>
+                        <p>+212 5 24 43 26 41</p>
                     </div>
                 </div>
                 <div class="info-item">
                     <span class="icon">📅</span>
-                    <div><strong>Ouvert aujourd'hui</strong>
-                        <p>12:00 - 15:00, 19:00 - 23:00</p>
+                    <div>
+                        <strong>Ouvert aujourd'hui</strong>
+                        <p>12:00 - 15:00 | 19:00 - 23:00</p>
                     </div>
                 </div>
                 <button class="cta-button full-width">Réserver une table</button>
@@ -497,26 +621,50 @@
         </div>
     </div>
 
+    <!-- BOTTOM: Reviews Section (Full Width) -->
+    <div class="container">
+        <section class="reviews-section">
+            <h2
+                style="font-size: 1.5rem; margin-bottom: 20px; color: #4CAF50; border-bottom: 1px solid #333; padding-bottom: 10px;">
+                ⭐ Avis des clients</h2>
+            <div class="write-review">
+                <h3>Écrire un avis</h3>
+                <div class="star-rating">
+                    <span data-rating="1">⭐</span>
+                    <span data-rating="2">⭐</span>
+                    <span data-rating="3">⭐</span>
+                    <span data-rating="4">⭐</span>
+                    <span data-rating="5">⭐</span>
+                </div>
+                <textarea id="reviewText" placeholder="Partagez votre expérience..."></textarea>
+                <button class="cta-button" id="submitReview">Envoyer</button>
+            </div>
+            <div id="reviewsList">
+                <p class="no-reviews">Pas encore d'avis. Soyez le premier à donner votre avis !</p>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
     <footer>
         <div class="footer-content">
             <div class="footer-brand">
                 <div class="footer-logo">🍴</div>
-                <div>
-                    <p class="footer-text">Le site incontournable pour les statistiques, les avis et la découverte de
-                        restaurants.</p>
-                </div>
+                <p class="footer-text">Le site incontournable pour les statistiques, les avis et la découverte de
+                    restaurants.</p>
             </div>
             <div class="footer-links">
                 <h4>Quick Links</h4>
                 <ul>
-                    <li><a href="#">À propos de nous</a></li>
-                    <li><a href="#">Top Restaurants</a></li>
+                    <li><a href="restaurant.html">Top Restaurants</a></li>
+                    <li><a href="statistique.html">Statistiques</a></li>
                 </ul>
             </div>
             <div class="footer-links">
                 <h4>Contact</h4>
                 <ul>
                     <li><a href="mailto:contact@palmeraiesaveurs.com">contact@palmeraiesaveurs.com</a></li>
+                    <li><a href="tel:+2125241234567">+212 5 24 12 34 567</a></li>
                 </ul>
             </div>
         </div>
@@ -524,50 +672,48 @@
             <p>© 2024 Palmeraie Saveurs. All rights reserved.</p>
         </div>
     </footer>
-<script>document.addEventListener('DOMContentLoaded', () => {
-        // Star Rating System
-        const stars = document.querySelectorAll('.star-rating span');
-        let selectedRating = 0;
 
-        stars.forEach((star, index) => {
-            // Click to select rating
-            star.addEventListener('click', () => {
-                selectedRating = index + 1;
-                updateStars(selectedRating);
-            });
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Star Rating System
+            const stars = document.querySelectorAll('.star-rating span');
+            let selectedRating = 0;
 
-            // Hover effect
-            star.addEventListener('mouseenter', () => {
-                updateStars(index + 1);
-            });
-
-            // Reset to selected rating on mouse leave
-            star.addEventListener('mouseleave', () => {
-                updateStars(selectedRating);
-            });
-        });
-
-        function updateStars(rating) {
             stars.forEach((star, index) => {
-                if (index < rating) {
-                    star.classList.add('active');
-                } else {
-                    star.classList.remove('active');
-                }
+                star.addEventListener('click', () => {
+                    selectedRating = index + 1;
+                    updateStars(selectedRating);
+                });
+
+                star.addEventListener('mouseenter', () => {
+                    updateStars(index + 1);
+                });
+
+                star.addEventListener('mouseleave', () => {
+                    updateStars(selectedRating);
+                });
             });
-        }
 
-        // Submit Review
-        const submitBtn = document.getElementById('submitReview');
-        const reviewText = document.getElementById('reviewText');
-        const reviewsList = document.getElementById('reviewsList');
-        const noReviews = document.querySelector('.no-reviews');
+            function updateStars(rating) {
+                stars.forEach((star, index) => {
+                    if (index < rating) {
+                        star.classList.add('active');
+                    } else {
+                        star.classList.remove('active');
+                    }
+                });
+            }
 
-        if (submitBtn && reviewText && reviewsList) {
+            // Submit Review
+            const submitBtn = document.getElementById('submitReview');
+            const reviewText = document.getElementById('reviewText');
+            const reviewsList = document.getElementById('reviewsList');
+            const noReviews = document.querySelector('.no-reviews');
+
             submitBtn.addEventListener('click', () => {
                 const text = reviewText.value.trim();
 
-                // Validation
                 if (selectedRating === 0) {
                     alert('Veuillez sélectionner une note (cliquez sur les étoiles).');
                     return;
@@ -578,12 +724,10 @@
                     return;
                 }
 
-                // Hide "no reviews" message
                 if (noReviews) {
                     noReviews.style.display = 'none';
                 }
 
-                // Create review element
                 const reviewItem = document.createElement('div');
                 reviewItem.style.backgroundColor = '#1E1E1E';
                 reviewItem.style.padding = '20px';
@@ -594,32 +738,27 @@
                 const currentDate = new Date().toLocaleDateString('fr-FR');
 
                 reviewItem.innerHTML = `
-                <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
-                    <strong style="color: #E0E0E0;">Vous</strong>
-                    <span style="color: #FFD700; font-size: 1.1rem;">${starsHTML}</span>
-                </div>
-                <p style="color: #B0B0B0; margin-bottom: 8px;">${text}</p>
-                <small style="color: #666;">${currentDate}</small>
-            `;
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                        <strong style="color: #E0E0E0;">Vous</strong>
+                        <span style="color: #FFD700; font-size: 1.1rem;">${starsHTML}</span>
+                    </div>
+                    <p style="color: #B0B0B0; margin-bottom: 8px;">${text}</p>
+                    <small style="color: #666;">${currentDate}</small>
+                `;
 
-                // Add review to list
                 reviewsList.appendChild(reviewItem);
 
-                // Reset form
                 reviewText.value = '';
                 selectedRating = 0;
                 updateStars(0);
 
-                // Success message
                 alert('Merci pour votre avis ! 🎉');
 
-                // Scroll to new review
                 reviewItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             });
-        }
-    });
-</script>
+        });
+    </script>
 
 </body>
 
-</html>    
+</html>
