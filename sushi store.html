@@ -4,9 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>La Fassia - Palmeraie Saveurs</title>
+    <title>Sushi Store - Palmeraie Saveurs</title>
     <style>
-        /* --- Restaurant Details Page Styles --- */
         :root {
             --color-background: #121212;
             --color-text: #E0E0E0;
@@ -161,7 +160,7 @@
             font-weight: bold;
         }
 
-        /* Details Layout */
+        /* ========== LAYOUT: Menu Left, Info Right ========== */
         .details-container {
             display: grid;
             grid-template-columns: 2fr 1fr;
@@ -184,22 +183,6 @@
             color: var(--color-primary);
             border-bottom: 1px solid #333;
             padding-bottom: 10px;
-        }
-
-        /* About Section */
-        .tags {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
-            flex-wrap: wrap;
-        }
-
-        .tag {
-            background-color: #333;
-            padding: 5px 12px;
-            border-radius: 15px;
-            font-size: 0.85rem;
-            color: #ccc;
         }
 
         /* Menu Section */
@@ -240,7 +223,54 @@
             color: #999;
         }
 
-        /* Reviews Section */
+        /* Sidebar - Info Card */
+        .info-card {
+            background-color: var(--color-card-bg);
+            padding: 25px;
+            border-radius: 8px;
+            position: sticky;
+            top: 100px;
+        }
+
+        .info-card h3 {
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .info-item {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .info-item .icon {
+            font-size: 1.2rem;
+        }
+
+        .info-item strong {
+            display: block;
+            color: #eee;
+            margin-bottom: 5px;
+        }
+
+        .info-item p {
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+
+        .full-width {
+            width: 100%;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        /* ========== REVIEWS SECTION - FULL WIDTH AT BOTTOM ========== */
+        .reviews-section {
+            margin-top: 50px;
+            padding-top: 40px;
+            border-top: 1px solid var(--color-border);
+        }
+
         .write-review {
             background-color: var(--color-card-bg);
             padding: 20px;
@@ -288,47 +318,6 @@
             color: #888;
             font-style: italic;
             margin-top: 20px;
-        }
-
-        /* Sidebar */
-        .info-card {
-            background-color: var(--color-card-bg);
-            padding: 25px;
-            border-radius: 8px;
-            position: sticky;
-            top: 100px;
-        }
-
-        .info-card h3 {
-            margin-bottom: 20px;
-            color: #fff;
-        }
-
-        .info-item {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .info-item .icon {
-            font-size: 1.2rem;
-        }
-
-        .info-item strong {
-            display: block;
-            color: #eee;
-            margin-bottom: 5px;
-        }
-
-        .info-item p {
-            font-size: 0.9rem;
-            color: #aaa;
-        }
-
-        .full-width {
-            width: 100%;
-            text-align: center;
-            margin-top: 10px;
         }
 
         /* Footer */
@@ -402,6 +391,7 @@
 
 <body>
 
+    <!-- Navigation -->
     <nav>
         <div class="logo">
             <div class="logo-icon">🍴</div>
@@ -420,95 +410,220 @@
         <div class="hero-overlay"></div>
         <div class="hero-content container">
             <a href="restaurant.html" class="back-link">← Retour aux restaurants</a>
-            <h1 class="hero-title">Sushi store</h1>
+            <h1 class="hero-title">Sushi Store</h1>
             <div class="hero-meta">
-                <span class="rating">⭐ 6.8 (420 avis)</span>
+                <span class="rating">⭐ 4.5 (380 avis)</span>
                 <span class="separator">•</span>
-                <span class="cuisine">Asiatique</span>
+                <span class="cuisine">Asiatique / Sushi</span>
                 <span class="separator">•</span>
-                <span class="price">$$$</span>
+                <span class="price">$$</span>
             </div>
         </div>
     </div>
 
+    <!-- Main Content: Menu (LEFT) + Localisation (RIGHT) -->
     <div class="container details-container">
-        <div class="main-content">
-           
 
-            <!-- Menu Section -->
+        <!-- LEFT SIDE: Menu -->
+        <div class="main-content">
             <section class="section menu-section">
                 <h2>🍴 Menu</h2>
 
                 <div class="menu-category">
-                    <h3>Entrées</h3>
+                    <h3>Entrées & Salades</h3>
                     <div class="menu-item">
                         <div class="item-header">
-                            <span class="item-name">Assortiment de Salades</span>
-                            <span class="item-price">65 MAD</span>
+                            <span class="item-name">Salade Tori</span>
+                            <span class="item-price">55 MAD</span>
                         </div>
-                        <p class="item-desc">salade tori.</p>
-                        <p class="item-desc">salade shake.</p>
-                        <p class="item-desc">salade kani.</p>
-                        <p class="item-desc">salade umi.</p>
+                        <p class="item-desc">Salade fraîche avec poulet grillé et sauce sésame.</p>
                     </div>
                     <div class="menu-item">
                         <div class="item-header">
-                            <span class="item-name">Soupes</span>
+                            <span class="item-name">Salade Shake</span>
                             <span class="item-price">60 MAD</span>
                         </div>
-                        <p class="item-desc">Soupe miso.</p>
-                        <p class="item-desc">Soupe tori</p>
-                        <p class="item-desc">Soupe Royale.</p>
-
-
+                        <p class="item-desc">Salade avec saumon fumé et avocat.</p>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-header">
+                            <span class="item-name">Salade Kani</span>
+                            <span class="item-price">55 MAD</span>
+                        </div>
+                        <p class="item-desc">Salade au crabe et légumes croquants.</p>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-header">
+                            <span class="item-name">Salade Umi</span>
+                            <span class="item-price">65 MAD</span>
+                        </div>
+                        <p class="item-desc">Salade aux fruits de mer variés.</p>
                     </div>
                 </div>
 
                 <div class="menu-category">
-                    <h3>Plats Principaux</h3>
+                    <h3>Soupes</h3>
                     <div class="menu-item">
                         <div class="item-header">
-                            <span class="item-name">California Rolls</span>
+                            <span class="item-name">Soupe Miso</span>
+                            <span class="item-price">35 MAD</span>
+                        </div>
+                        <p class="item-desc">Soupe traditionnelle japonaise au tofu et algues.</p>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-header">
+                            <span class="item-name">Soupe Tori</span>
+                            <span class="item-price">45 MAD</span>
+                        </div>
+                        <p class="item-desc">Soupe au poulet et légumes.</p>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-header">
+                            <span class="item-name">Soupe Royale</span>
+                            <span class="item-price">60 MAD</span>
+                        </div>
+                        <p class="item-desc">Soupe aux fruits de mer et nouilles udon.</p>
+                    </div>
+                </div>
+
+                <div class="menu-category">
+                    <h3>California Rolls (4 pièces)</h3>
+                    <div class="menu-item">
+                        <div class="item-header">
+                            <span class="item-name">Classic Rolls</span>
+                            <span class="item-price">45 MAD</span>
+                        </div>
+                        <p class="item-desc">Saumon, avocat, concombre, mayo.</p>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-header">
+                            <span class="item-name">Rolls Fry</span>
                             <span class="item-price">50 MAD</span>
                         </div>
-                        <p class="item-desc">4 pieces</p>
-                        <p>Classic Rolls</p>
-                        <p>Rolls Fry</p>
-                        <p>ARomaki Saumon</p>
-
+                        <p class="item-desc">Tempura croustillant avec crevette panée.</p>
                     </div>
                     <div class="menu-item">
                         <div class="item-header">
-                            <span class="item-name">
-                                <h3>California Rolls</h3>
-                            </span>
+                            <span class="item-name">Uramaki Saumon</span>
+                            <span class="item-price">55 MAD</span>
+                        </div>
+                        <p class="item-desc">Saumon frais, avocat, riz à l'extérieur.</p>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-header">
+                            <span class="item-name">Dragon Roll</span>
                             <span class="item-price">70 MAD</span>
                         </div>
-                        <p>Saumon</p>
-                        <p>Crevette</p>
-                        <p>Fruit de mer</p>
-                        <p>poulet</p>
+                        <p class="item-desc">Anguille grillée, avocat, sauce teriyaki.</p>
                     </div>
-
                 </div>
 
                 <div class="menu-category">
-                    <div class="item-header">
-                        <span class="item-name">
-                            <h3>California Rolls</h3>
-                        </span>
-                        <span class="item-price">40 MAD</span>
+                    <h3>Sashimi & Nigiri (6 pièces)</h3>
+                    <div class="menu-item">
+                        <div class="item-header">
+                            <span class="item-name">Sashimi Saumon</span>
+                            <span class="item-price">65 MAD</span>
+                        </div>
+                        <p class="item-desc">Tranches de saumon frais premium.</p>
                     </div>
-                    <p>Litchi</p>
-                    <p>Teramisu</p>
-                    <p>Chesse creme</p>
+                    <div class="menu-item">
+                        <div class="item-header">
+                            <span class="item-name">Nigiri Mix</span>
+                            <span class="item-price">70 MAD</span>
+                        </div>
+                        <p class="item-desc">Assortiment saumon, thon, crevette.</p>
+                    </div>
                 </div>
-        </div>
-        </section>
 
-        <!-- Reviews Section -->
-        <section class="section reviews-section">
-            <h2>Avis</h2>
+                <div class="menu-category">
+                    <h3>Plateaux Découverte</h3>
+                    <div class="menu-item">
+                        <div class="item-header">
+                            <span class="item-name">Plateau Solo</span>
+                            <span class="item-price">120 MAD</span>
+                        </div>
+                        <p class="item-desc">12 pièces variées + soupe miso.</p>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-header">
+                            <span class="item-name">Plateau Duo</span>
+                            <span class="item-price">220 MAD</span>
+                        </div>
+                        <p class="item-desc">24 pièces variées + 2 soupes + 2 salades.</p>
+                    </div>
+                </div>
+
+                <div class="menu-category">
+                    <h3>Desserts</h3>
+                    <div class="menu-item">
+                        <div class="item-header">
+                            <span class="item-name">Litchi</span>
+                            <span class="item-price">35 MAD</span>
+                        </div>
+                        <p class="item-desc">Litchis frais au sirop.</p>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-header">
+                            <span class="item-name">Tiramisu</span>
+                            <span class="item-price">40 MAD</span>
+                        </div>
+                        <p class="item-desc">Tiramisu maison crémeux.</p>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-header">
+                            <span class="item-name">Cheese Cake</span>
+                            <span class="item-price">40 MAD</span>
+                        </div>
+                        <p class="item-desc">Cheesecake New York style.</p>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-header">
+                            <span class="item-name">Mochi Ice Cream</span>
+                            <span class="item-price">45 MAD</span>
+                        </div>
+                        <p class="item-desc">Glace japonaise enrobée de riz gluant (3 pcs).</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- RIGHT SIDE: Localisation & Horaires -->
+        <div class="sidebar">
+            <div class="info-card">
+                <h3>📍 Localisation & Horaires</h3>
+                <div class="info-item">
+                    <span class="icon">📍</span>
+                    <div>
+                        <strong>Guéliz</strong>
+                        <p>14 Rue Imam Chafaï, Kawkab Centre, Marrakech</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <span class="icon">📞</span>
+                    <div>
+                        <strong>Téléphone</strong>
+                        <p>+212 5 24 43 XX XX</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <span class="icon">📅</span>
+                    <div>
+                        <strong>Ouvert aujourd'hui</strong>
+                        <p>12:00 - 01:00</p>
+                    </div>
+                </div>
+                <button class="cta-button full-width">Réserver une table</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- BOTTOM: Reviews Section (Full Width) -->
+    <div class="container">
+        <section class="reviews-section">
+            <h2
+                style="font-size: 1.5rem; margin-bottom: 20px; color: #4CAF50; border-bottom: 1px solid #333; padding-bottom: 10px;">
+                ⭐ Avis des clients</h2>
             <div class="write-review">
                 <h3>Écrire un avis</h3>
                 <div class="star-rating">
@@ -527,50 +642,26 @@
         </section>
     </div>
 
-    <!-- Sidebar -->
-    <div class="sidebar">
-        <div class="info-card">
-            <h3>Localisation & Horaires</h3>
-            <div class="info-item">
-                <span class="icon">📍</span>
-                <div>
-                    <strong>Gueliz</strong>
-                    <p>14 RUE IMAM CHAFAÏ KAWKAB CENTRE -</p>
-                </div>
-            </div>
-            <div class="info-item">
-                <span class="icon">📅</span>
-                <div>
-                    <strong>Ouvert aujourd'hui</strong>
-                    <p>12:00 -- 01:00</p>
-                </div>
-            </div>
-            <button class="cta-button full-width">Réserver une table</button>
-        </div>
-    </div>
-    </div>
-
-    <!--footer-->
+    <!-- Footer -->
     <footer>
         <div class="footer-content">
             <div class="footer-brand">
                 <div class="footer-logo">🍴</div>
-                <div>
-                    <p class="footer-text">Le site incontournable pour les statistiques, les avis et la découverte de
-                        restaurants.</p>
-                </div>
+                <p class="footer-text">Le site incontournable pour les statistiques, les avis et la découverte de
+                    restaurants.</p>
             </div>
             <div class="footer-links">
                 <h4>Quick Links</h4>
                 <ul>
-                    <li><a href="#">À propos de nous</a></li>
-                    <li><a href="#">Top Restaurants</a></li>
+                    <li><a href="restaurant.html">Top Restaurants</a></li>
+                    <li><a href="statistique.html">Statistiques</a></li>
                 </ul>
             </div>
             <div class="footer-links">
                 <h4>Contact</h4>
                 <ul>
                     <li><a href="mailto:contact@palmeraiesaveurs.com">contact@palmeraiesaveurs.com</a></li>
+                    <li><a href="tel:+2125241234567">+212 5 24 12 34 567</a></li>
                 </ul>
             </div>
         </div>
@@ -587,18 +678,15 @@
             let selectedRating = 0;
 
             stars.forEach((star, index) => {
-                // Click to select rating
                 star.addEventListener('click', () => {
                     selectedRating = index + 1;
                     updateStars(selectedRating);
                 });
 
-                // Hover effect
                 star.addEventListener('mouseenter', () => {
                     updateStars(index + 1);
                 });
 
-                // Reset to selected rating on mouse leave
                 star.addEventListener('mouseleave', () => {
                     updateStars(selectedRating);
                 });
@@ -623,7 +711,6 @@
             submitBtn.addEventListener('click', () => {
                 const text = reviewText.value.trim();
 
-                // Validation
                 if (selectedRating === 0) {
                     alert('Veuillez sélectionner une note (cliquez sur les étoiles).');
                     return;
@@ -634,12 +721,10 @@
                     return;
                 }
 
-                // Hide "no reviews" message
                 if (noReviews) {
                     noReviews.style.display = 'none';
                 }
 
-                // Create review element
                 const reviewItem = document.createElement('div');
                 reviewItem.style.backgroundColor = '#1E1E1E';
                 reviewItem.style.padding = '20px';
@@ -658,18 +743,14 @@
                     <small style="color: #666;">${currentDate}</small>
                 `;
 
-                // Add review to list
                 reviewsList.appendChild(reviewItem);
 
-                // Reset form
                 reviewText.value = '';
                 selectedRating = 0;
                 updateStars(0);
 
-                // Success message
                 alert('Merci pour votre avis ! 🎉');
 
-                // Scroll to new review
                 reviewItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             });
         });
