@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statistiques - Palmeraie Saveurs</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --color-background: #000000;
+            --color-surface: #121212;
+            --color-text: #FFFFFF;
+            --color-text-secondary: #A0A0A0;
+            --color-primary: #4CAF50;
+            --color-border: #333333;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background-color: var(--color-background);
+            color: var(--color-text);
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            background-color: var(--color-surface);
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        .logo-icon {
+            margin-right: 10px;
+            background-color: var(--color-primary);
+            padding: 5px;
+            border-radius: 5px;
+            color: white;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: var(--color-text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--color-primary);
+        }
+
+        .cta-button {
+            background-color: var(--color-primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 50px;
+        }
+
+        /* Stats Overview Cards */
+        .stats-overview {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 60px;
+        }
+
+        .stat-card {
+            flex: 1;
+            background-color: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .stat-icon-circle {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 1px solid #444;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: var(--color-primary);
+        }
+
+        .stat-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stat-label {
+            color: var(--color-text-secondary);
+            font-size: 0.8rem;
+            margin-bottom: 5px;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        /* Charts Section */
+        .charts-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            margin-bottom: 50px;
+        }
+
+        .chart-container h2 {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        /* Footer */
+        footer {
+            background-color: white;
+            color: #333;
+            padding: 50px;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-left {
+            display: flex;
+            gap: 20px;
+            max-width: 400px;
+        }
+
+        .footer-icon {
+            background-color: var(--color-primary);
+            width: 40px;
+            height: 40px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .footer-desc {
+            font-size: 0.9rem;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .footer-links-col h4 {
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            color: #000;
+        }
+
+        .footer-links-col ul {
+            list-style: none;
+        }
+
+        .footer-links-col ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links-col ul li a {
+            color: #666;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 40px;
+            border-top: 1px solid #eee;
+            margin-top: 40px;
+            color: #888;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            .charts-row {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-overview {
+                flex-direction: column;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 40px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div class="logo">
+            <div class="logo-icon">🍴</div>
+            <span>Palmeraie Saveurs</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="restaurant.html">Restaurants</a></li>
+            <li><a href="statistique.html" class="active">Statistics</a></li>
+        </ul>
+        <a href="find a table.html" class="cta-button">Trouver une table</a>
+    </nav>
+
+    <div class="container">
+
+        <!-- Overview Cards -->
+        <div class="stats-overview">
+            <div class="stat-card">
+                <div class="stat-icon-circle">↗</div>
+                <div class="stat-info">
+                    <span class="stat-label">Total Restaurants</span>
+                    <span class="stat-number">24</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon-circle">📊</div>
+                <div class="stat-info">
+                    <span class="stat-label">Average Rating</span>
+                    <span class="stat-number">4.4</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon-circle">🕒</div>
+                <div class="stat-info">
+                    <span class="stat-label">Total Reviews</span>
+                    <span class="stat-number">4855</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts -->
+        <div class="charts-row">
+            <div class="chart-container">
+                <h2>Cuisine Distribution</h2>
+                <canvas id="cuisineChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <h2>Rating Distribution</h2>
+                <canvas id="ratingChart"></canvas>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-left">
+                <div class="footer-icon">🍴</div>
+                <div>
+                    <p class="footer-desc">Le site incontournable pour les statistiques, les avis et la découverte de
+                        restaurants.</p>
+                    <p class="footer-desc" style="margin-top: 10px;">Trouvez votre prochain plat préféré grâce à des
+                        analyses de données.</p>
+                </div>
+            </div>
+
+            <div class="footer-links-col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#">À propos de nous</a></li>
+                    <li><a href="#">Top Restaurants</a></li>
+                    <li><a href="statistics.html">Statistics</a></li>
+                    <li><a href="#">Add Review</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-links-col">
+                <h4>Contact</h4>
+                <ul>
+                    <li><a href="mailto:contact@palmeraiesaveurs.com">contact@palmeraiesaveurs.com</a></li>
+                    <li><a href="tel:+2121234567">+212 123-4567</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>© 2024 Palmeraie Saveurs. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Common Chart Configuration
+        Chart.defaults.color = '#FFFFFF';
+        Chart.defaults.font.family = "'Outfit', sans-serif";
+
+        // 1. Cuisine Distribution Chart (Horizontal Bar)
+        const ctxCuisine = document.getElementById('cuisineChart').getContext('2d');
+        new Chart(ctxCuisine, {
+            type: 'bar',
+            data: {
+                labels: ['Moroccan', 'Asian', 'Italian', 'American'],
+                datasets: [{
+                    data: [4, 4, 3, 4], // Based on file counts
+                    backgroundColor: '#4CAF50',
+                    barPercentage: 0.2,
+                    borderRadius: 5,
+                    categoryPercentage: 1.0
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: { enabled: true }
+                },
+                scales: {
+                    x: {
+                        display: false,
+                        max: 5
+                    },
+                    y: {
+                        grid: { display: false, drawBorder: false },
+                        ticks: { color: '#FFFFFF', font: { size: 12 } }
+                    }
+                }
+            }
+        });
+
+        // 2. Rating Distribution Chart (Vertical Bar - Stars)
+        const ctxRating = document.getElementById('ratingChart').getContext('2d');
+        new Chart(ctxRating, {
+            type: 'bar',
+            data: {
+                labels: ['1★', '2★', '3★', '4★', '5★'],
+                datasets: [{
+                    data: [1, 2, 5, 12, 8],
+                    backgroundColor: '#FFFFFF',
+                    barPercentage: 0.05, // Very thin lines
+                    borderRadius: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { display: false },
+                    x: {
+                        grid: { display: false, drawBorder: false },
+                        ticks: { color: '#FFFFFF' }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

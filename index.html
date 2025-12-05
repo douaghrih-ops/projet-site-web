@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="ar" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Palmeraie Saveurs - Discover Data-Driven Dining</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.6)),
+                url('images/image\ restaurant.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .logo-icon {
+            width: 35px;
+            height: 35px;
+            background: #4a9d5f;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a:hover {
+            color: #4a9d5f;
+        }
+
+        .nav-links .active {
+            color: #4a9d5f;
+        }
+
+        .cta-button {
+            background: #4a9d5f;
+            color: white;
+            padding: 0.7rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .cta-button:hover {
+            background: #3d8550;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(74, 157, 95, 0.4);
+        }
+
+        /* Hero Content */
+        .hero-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #d1d1d1;
+            margin-bottom: 3rem;
+            max-width: 600px;
+        }
+
+        /* Search Bar */
+        .search-container {
+            width: 100%;
+            max-width: 650px;
+            position: relative;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 1.2rem 1.5rem;
+            padding-right: 140px;
+            border-radius: 50px;
+            border: none;
+            font-size: 1rem;
+            background: white;
+            color: #333;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .search-box::placeholder {
+            color: #999;
+        }
+
+        .search-button {
+            position: absolute;
+            right: 6px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #4a9d5f;
+            color: white;
+            border: none;
+            padding: 0.85rem 2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .search-button:hover {
+            background: #3d8550;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 5rem 5%;
+            background: #0f0f0f;
+        }
+
+        .features h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .features-subtitle {
+            text-align: center;
+            color: #999;
+            margin-bottom: 4rem;
+            font-size: 1.1rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: #1a1a1a;
+            padding: 3rem 2rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s;
+            border: 1px solid #222;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: #4a9d5f;
+            box-shadow: 0 10px 40px rgba(74, 157, 95, 0.2);
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 1.5rem;
+            background: #252525;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+
+        .feature-card:nth-child(1) .feature-icon {
+            color: #e74c3c;
+        }
+
+        .feature-card:nth-child(2) .feature-icon {
+            color: #4a9d5f;
+        }
+
+        .feature-card:nth-child(3) .feature-icon {
+            color: #f39c12;
+        }
+
+        .feature-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card p {
+            color: #999;
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        footer {
+            background: #ffffff;
+            padding: 4rem 5% 2rem;
+            border-top: 1px solid #222;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto 3rem;
+        }
+
+        .footer-brand {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .footer-logo {
+            width: 45px;
+            height: 45px;
+            background: #4a9d5f;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .footer-text {
+            color: #999;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .footer-links h4 {
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: #999;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .footer-links a:hover {
+            color: #4a9d5f;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #222;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+
+            .search-box {
+                padding-right: 120px;
+                font-size: 0.9rem;
+            }
+
+            .search-button {
+                padding: 0.75rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <!-- Navigation -->
+        <nav>
+            <div class="logo">
+                <div class="logo-icon">🍴</div>
+                <span>Palmeraie Saveurs</span>
+            </div>
+        <ul class="nav-links">
+            <li><a href="index.html" class="active">Accueil</a></li>
+            <li><a href="restaurant.html">Restaurants</a></li>
+            <li><a href="statistique.html">📊 Statistics</a></li>
+        </ul>
+           
+            <a href="find a table.html" class="cta-button">Trouver une table</a>
+        </nav>
+
+        <div class="hero-content">
+            <h1>Découvrez la restauration axée sur les données</h1>
+            <p>Explorez les statistiques des restaurants, comparez les notes et trouvez l'expérience culinaire idéale
+                basée sur des données réelles.</p>
+
+            <div class="search-container">
+                <input type="text" class="search-box"
+                    placeholder="Rechercher des restaurants, des types de cuisine ou des lieux...">
+                <button class="search-button">Rechercher</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <h2>Why Palmeraie Saveurs?</h2>
+        <p class="features-subtitle">We provide comprehensive data to help you make the best dining decisions.</p>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">📈</div>
+                <h3>Trend Analysis</h3>
+                <p>See which restaurants are gaining popularity and what cuisines are trending in your area.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">⭐</div>
+                <h3>Detailed Reviews</h3>
+                <p>Access detailed breakdowns of ratings for service, food quality, and ambiance.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Comparative Stats</h3>
+                <p>Compare restaurants side-by-side on price, rating, and popularity metrics.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="footer-logo">🍴</div>
+                <div>
+                    <p class="footer-text">The ultimate destination for restaurant statistics, reviews, and discovery.
+                        Find your next favorite meal with data-driven insights.</p>
+                </div>
+            </div>
+
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Top Restaurants</a></li>
+                    <li><a href="#">Statistics</a></li>
+                    <li><a href="#">Add Review</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-links">
+                <h4>Contact</h4>
+                <ul>
+                    <li><a href="mailto:contact@palmeraiesaveurs.com">contact@palmeraiesaveurs.com</a></li>
+                    <li><a href="tel:+1234567890">+1 (555) 123-4567</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2024 Palmeraie Saveurs. All rights reserved.</p>
+        </div>
+    </footer>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // 1. Sélectionner les éléments du DOM
+        const searchButton = document.querySelector('.search-button');
+        const searchBox = document.querySelector('.search-box');
+
+        // 2. Définir la fonction de recherche
+        function handleSearch() {
+            // Récupérer le texte saisi par l'utilisateur
+            const query = searchBox.value.trim();
+
+            if (query) {
+                // Si l'utilisateur a tapé quelque chose, on le redirige.
+                // Note: Nous encodons la requête pour gérer les espaces et caractères spéciaux.
+                const encodedQuery = encodeURIComponent(query);
+
+                // Redirection vers une page de résultats (que vous devrez créer)
+                window.location.href = `restaurant.html?query=${encodedQuery}`;
+            } else {
+                // Optionnel: Afficher un message si le champ est vide
+                alert("Veuillez entrer un terme de recherche.");
+                searchBox.focus(); // Remettre le curseur dans le champ
+            }
+        }
+
+        // 3. Écouter les événements
+        // Attacher la fonction au clic du bouton
+        searchButton.addEventListener('click', handleSearch);
+
+        // Attacher la fonction à l'appui sur la touche 'Entrée' dans le champ de saisie
+        searchBox.addEventListener('keypress', function (event) {
+            // 13 est le keyCode pour la touche 'Entrée' (ou 'Enter')
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Empêcher l'envoi du formulaire par défaut (si c'en était un)
+                handleSearch();
+            }
+        });
+    });
+</script>
+</body>
+</html>   

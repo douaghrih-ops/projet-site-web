@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des Restaurants - Palmeraie Saveurs</title>
+    <style>
+        :root {
+            --color-background: #121212;
+            --color-text: #E0E0E0;
+            --color-primary: #4CAF50;
+            --color-secondary: #E0E0E0;
+            --color-card-bg: #1E1E1E;
+            --color-input-bg: #2C2C2C;
+            --color-border: #333333;
+            --color-star: #FFD700;
+            --color-location: #007bff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background-color: var(--color-background);
+            color: var(--color-text);
+            line-height: 1.6;
+        }
+
+        a {
+            color: var(--color-text);
+            text-decoration: none;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 30px 50px;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 50px;
+            border-bottom: 1px solid var(--color-border);
+            background-color: var(--color-card-bg);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--color-primary);
+        }
+
+        .logo-icon {
+            margin-right: 8px;
+            font-size: 1.5rem;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+        }
+
+        .nav-links li a {
+            margin: 0 15px;
+            transition: color 0.3s;
+        }
+
+        .nav-links li a:hover,
+        .nav-links li a.active {
+            color: var(--color-primary);
+        }
+
+        .cta-button {
+            background-color: var(--color-primary);
+            color: var(--color-background);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .cta-button:hover {
+            background-color: #388E3C;
+        }
+
+        /* Header */
+        .page-header {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 5px;
+        }
+
+        .page-header p {
+            color: #A0A0A0;
+        }
+
+        /* Search & Filters */
+        .search-filter-section {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 40px;
+            align-items: center;
+            padding-top: 20px;
+        }
+
+        .search-bar {
+            width: 50%;
+            min-width: 300px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid var(--color-border);
+            background-color: var(--color-input-bg);
+            color: var(--color-text);
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .filters {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .filter-btn {
+            background-color: var(--color-input-bg);
+            color: var(--color-text);
+            border: 1px solid var(--color-border);
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .filter-btn:hover {
+            background-color: #383838;
+        }
+
+        .filter-btn.active {
+            background-color: var(--color-primary);
+            color: var(--color-background);
+            border-color: var(--color-primary);
+        }
+
+        /* Restaurant Grid */
+        .restaurants-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 50px;
+        }
+
+        /* Force 3 columns on desktop */
+        @media (min-width: 1200px) {
+            .restaurants-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        /* Restaurant Card */
+        .restaurant-card {
+            background-color: var(--color-card-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            position: relative;
+            transition: transform 0.3s;
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            color: var(--color-text);
+        }
+
+        .restaurant-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-image-container {
+            position: relative;
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .card-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .favorite-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(0, 0, 0, 0.6);
+            color: var(--color-star);
+            border: none;
+            border-radius: 50%;
+            padding: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            line-height: 1;
+        }
+
+        .card-content {
+            padding: 15px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        .card-title {
+            font-size: 1.4rem;
+            color: var(--color-text);
+        }
+
+        .card-meta {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .cuisine-type {
+            color: var(--color-primary);
+            font-weight: bold;
+        }
+
+        .price-range {
+            color: #A0A0A0;
+        }
+
+        .card-description {
+            font-size: 0.9rem;
+            color: #B0B0B0;
+            margin-bottom: 15px;
+            height: 3.6em;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            flex-grow: 1;
+        }
+
+        .card-footer {
+            display: flex;
+            align-items: center;
+            font-size: 0.9rem;
+            color: var(--color-location);
+            margin-top: auto;
+        }
+
+        .location-icon {
+            margin-right: 5px;
+        }
+
+        .restaurant-card.hidden {
+            display: none;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #1A1A1A;
+            padding: 40px 50px 20px;
+            color: #B0B0B0;
+            border-top: 1px solid var(--color-border);
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-brand {
+            flex: 2;
+            min-width: 250px;
+        }
+
+        .footer-logo {
+            font-size: 2rem;
+            color: var(--color-primary);
+            margin-bottom: 10px;
+        }
+
+        .footer-text {
+            font-size: 0.9rem;
+        }
+
+        .footer-links {
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .footer-links h4 {
+            color: var(--color-text);
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links ul li {
+            margin-bottom: 8px;
+        }
+
+        .footer-links ul li a {
+            color: #B0B0B0;
+            font-size: 0.9rem;
+        }
+
+        .footer-links ul li a:hover {
+            color: var(--color-primary);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 15px;
+            border-top: 1px solid #2C2C2C;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <div class="logo">
+            <div class="logo-icon">🍴</div>
+            <span>Palmeraie Saveurs</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="restaurant.html" class="active">Restaurants</a></li>
+            <li><a href="statistique.html">📊 Statistics</a></li>
+        </ul>
+        <a href="find a table.html" class="cta-button">Trouver une table</a>
+    </nav>
+
+    <div class="search-filter-section">
+        <div class="search-bar">
+            <input type="text" class="search-input" placeholder="🔍 Rechercher des restaurants...">
+        </div>
+        <div class="filters">
+            <button class="filter-btn active" data-filter="tous">Tous</button>
+            <button class="filter-btn" data-filter="marocain">Marocain</button>
+            <button class="filter-btn" data-filter="asiatique">Asiatique</button>
+            <button class="filter-btn" data-filter="italien">Italien</button>
+            <button class="filter-btn" data-filter="americaine">Americaine</button>
+        </div>
+    </div>
+
+    <div class="restaurants-grid">
+        <a href="la fassia.html" class="restaurant-card" data-cuisine="marocain">
+            <div class="card-image-container">
+                <img src="images/images resto1.jpeg" alt="la fassia" class="card-image">
+                <button class="favorite-btn">⭐</button>
+            </div>
+            <div class="card-content">
+                <div class="card-header">
+                    <h3 class="card-title">la fassia</h3>
+                </div>
+                <div class="card-meta">
+                    <span class="cuisine-type">Marocain</span>
+                    <span class="price-range">$ $ $ $</span>
+                </div>
+                <p class="card-description">
+                    Entièrement géré par des femmes, La Fassia est une institution à Marrakech. Célèbre pour sa Pastilla
+                    exquise et ses Tajines authentiques. Une expérience culinaire inoubliable dans un cadre raffiné
+                </p>
+                <div class="card-footer">
+                    <span class="location-icon">📍</span>
+                    <span>Médina</span>
+                </div>
+            </div>
+        </a>
+        <a href="dar moha.html" class="restaurant-card" data-cuisine="marocain">
+            <div class="card-image-container">
+                <img src="images/images resto2.jpeg" alt="Dar Moha" class="card-image">
+                <button class="favorite-btn">⭐</button>
+            </div>
+            <div class="card-content">
+                <div class="card-header">
+                    <h3 class="card-title">Dar Moha</h3>
+                </div>
+                <div class="card-meta">
+                    <span class="cuisine-type">Marocain</span>
+                    <span class="price-range">$ $ $ $</span>
+                </div>
+                <p class="card-description">
+                    Entièrement géré par des femmes, La Fassia est une institution à Marrakech. Célèbre pour sa Pastilla
+                    exquise et ses Tajines authentiques. Une expérience culinaire inoubliable dans un cadre raffiné
+                </p>
+                <div class="card-footer">
+                    <span class="location-icon">📍</span>
+                    <span>Médina</span>
+                </div>
+            </div>
+        </a>
+        <a href="beldifusion.html" class="restaurant-card" data-cuisine="marocain">
+            <div class="card-image-container">
+                <img src="images/image resto3.webp" alt="beldifusion" class="card-image">
+                <button class="favorite-btn">⭐</button>
+            </div>
+            <div class="card-content">
+                <div class="card-header">
+                    <h3 class="card-title">beldifusion</h3>
+                </div>
+                <div class="card-meta">
+                    <span class="cuisine-type">Marocain</span>
+                    <span class="price-range">$ $</span>
+                </div>
+                <p class="card-description">
+                    Cuisine fusion innovante mêlant saveurs marocaines et internationales. Ambiance moderne et chic
+                    avec une carte créative.
+                </p>
+                <div class="card-footer">
+                    <span class="location-icon">📍</span>
+                    <span>Guéliz</span>
+                </div>
+            </div>
+        </a>
+        <a href="haj lamine.html" class="restaurant-card" data-cuisine="marocain">
+            <div class="card-image-container">
+                <img src="images/image resto4.jpg" alt="Haj Lamine" class="card-image">
+                <button class="favorite-btn">⭐</button>
+            </div>
+            <div class="card-content">
+                <div class="card-header">
+                    <h3 class="card-title">Haj Lamine</h3>
+                </div>
+                <div class="card-meta">
+                    <span class="cuisine-type">Marocain</span>
+                    <span class="price-range">$ $</span>
+                </div>
+                <p class="card-description">
+                    Restaurant traditionnel marocain authentique. Spécialités de tajines, couscous et grillades
+                    préparés selon les recettes ancestrales.
+                </p>
+                <div class="card-footer">
+                    <span class="location-icon">📍</span>
+                    <span>Médina</span>
+                </div>
+            </div>
+        </a>
+        <a href="sushia.html" class="restaurant-card" data-cuisine="asiatique">
+            <div class="card-image-container">
+                <img src="images/asiatique1.jpeg" alt="Sushiya" class="card-image">
+                <button class="favorite-btn">⭐</button>
+            </div>
+            <div class="card-content">
+                <div class="card-header">
+                    <h3 class="card-title">Sushiya</h3>
+                </div>
+                <div class="card-meta">
+                    <span class="cuisine-type">Asiatique</span>
+                    <span class="price-range">$ $</span>
+                </div>
+                <p class="card-description">
+                    Très connu pour ses sushis frais et sa variété de plats japonais et asiatiques.
+                </p>
+                <div class="card-footer">
+                    <span class="location-icon">📍</span>
+                    <span>Guéliz</span>
+                </div>
+            </div>
+        </a>
+        <a href="ashokai.html" class="restaurant-card" data-cuisine="asiatique">
+            <div class="card-image-container">
+                <img src="images/images.jpeg" alt="Ashokai" class="card-image">
+                <button class="favorite-btn">⭐</button>
+            </div>
+            <div class="card-content">
+                <div class="card-header">
+                    <h3 class="card-title">Ashokai</h3>
+                </div>
+                <div class="card-meta">
+                    <span class="cuisine-type">Asiatique</span>
+                    <span class="price-range">$ $ $</span>
+                </div>
+                <p class="card-description">
+                    Restaurant japonais haut de gamme. Sushi bar avec chefs expérimentés, sashimi frais et rolls
+                    créatifs.
+                </p>
+                <div class="card-footer">
+                    <span class="location-icon">📍</span>
+                    <span>Hivernage</span>
+                </div>
+            </div>
+        </a>
+        <a href="sushi store.html" class="restaurant-card" data-cuisine="asiatique">
+            <div class="card-image-container">
+                <img src="images/asiatique2.jpeg" alt="Sushi Store" class="card-image">
+                <button class="favorite-btn">⭐</button>
+            </div>
+            <div class="card-content">
+                <div class="card-header">
+                    <h3 class="card-title">Sushi Store</h3>
+                </div>
+                <div class="card-meta">
+                    <span class="cuisine-type">Asiatique</span>
+                    <span class="price-range">$ $</span>
+                </div>
+                <p class="card-description">
+                    Concept moderne de sushi à emporter et sur place. Menu varié avec California rolls, Dragon rolls
+                    et plateaux découverte.
+                </p>
+                <div class="card-footer">
+                    <span class="location-icon">📍</span>
+                    <span>Guéliz</span>
+                </div>
+            </div>
+        </a>
+        <a href="zushi.html" class="restaurant-card" data-cuisine="asiatique">
+            <div class="card-image-container">
+                <img src="images/zushiii.jpeg" alt="zushi" class="card-image">
+                <button class="favorite-btn">⭐</button>
+            </div>
+            <div class="card-content">
+                <div class="card-header">
+                    <h3 class="card-title">zushi</h3>
+                </div>
+                <div class="card-meta">
+                    <span class="cuisine-type">Asiatique</span>
+                    <span class="price-range">$ $ $</span>
+                </div>
+                <p class="card-description">
+                    Concept moderne de sushi à emporter et sur place. Menu varié avec California rolls, Dragon rolls
+                    et plateaux découverte.
+                </p>
+                <div class="card-footer">
+                    <span class="location-icon">📍</span>
+                    <span>Guéliz</span>
+                </div>
+            </div>
+        </a>
+        <a href="latelier burger.html" class="restaurant-card" data-cuisine="americaine">
+            <div class="card-image-container">
+                <img src="images/l atelier.jpeg" alt="L'Atelier Burger" class="card-image">
+                <button class="favorite-btn">⭐</button>
+            </div>
+            <div class="card-content">
+                <div class="card-header">
+                    <h3 class="card-title">L'Atelier Burger</h3>
+                </div>
+                <div class="card-meta">
+                    <span class="cuisine-type">Americaine</span>
+                    <span class="price-range">$ $</span>
+                </div>
+                <p class="card-description">
+                    Les meilleurs burgers artisanaux de Marrakech! Viande fraîche, pains briochés maison et sauces
+                    authentiques.
+                </p>
+                <div class="card-footer">
+                    <span class="location-icon">📍</span>
+                    <span>Guéliz</span>
+                </div>
+            </div>
+        </a>
+        <a href="traffic burger.html" class="restaurant-card" data-cuisine="americaine">
+            <div class="card-image-container">
+                <img src="images/traffic.jpeg" alt="traffic burger" class="card-image">
+                <button class="favorite-btn">⭐</button>
+            </div>
+            <div class="card-content">
+                <div class="card-header">
+                    <h3 class="card-title">traffic burger</h3>
+                </div>
+                <div class="card-meta">
+                    <span class="cuisine-type">Americaine</span>
+                    <span class="price-range">$ $ $</span>
+                </div>
+                <p class="card-description">
+                    Restaurant-lounge avec terrasse panoramique. Burgers gourmet et cuisine internationale. Vue
+                    imprenable sur la Médina.
+                </p>
+                <div class="card-footer">
+                    <span class="location-icon">📍</span>
+                    <span>Sidi Abbad</span>
+                </div>
+            </div>
+        </a>
+        <a href="medina burger.html" class="restaurant-card" data-cuisine="americaine">
+            <div class="card-image-container">
+                <img src="images/medina.jpeg" alt="medina burger" class="card-image">
+                <button class="favorite-btn">⭐</button>
+            </div>
+            <div class="card-content">
+                <div class="card-header">
+                    <h3 class="card-title">medina burger</h3>
+                </div>
+                <div class="card-meta">
+                    <span class="cuisine-type">Americaine</span>
+                    <span class="price-range">$ $</span>
+                </div>
+                <p class="card-description">
+                    Célèbre pour son Camel Burger unique! Ambiance culturelle avec concerts live et événements
+                    artistiques.
+                </p>
+                <div class="card-footer">
+                    <span class="location-icon">📍</span>
+                    <span>Médina - Malah</span>
+                </div>
+            </div>
+        </a>
+        <a href="omami burger.html" class="restaurant-card" data-cuisine="americaine">
+            <div class="card-image-container">
+                <img src="images/omami.jpeg" alt="omami burger" class="card-image">
+                <button class="favorite-btn">⭐</button>
+            </div>
+            <div class="card-content">
+                <div class="card-header">
+                    <h3 class="card-title">omami burger</h3>
+                </div>
+                <div class="card-meta">
+                    <span class="cuisine-type">Americaine</span>
+                    <span class="price-range">$ $ $</span>
+                </div>
+                <p class="card-description">
+                    Burgers généreux. Spécialité: Safari Burger et Mama's Special. Portions ambiance festive et prix
+                    abordables.
+                </p>
+                <div class="card-footer">
+                    <span class="location-icon">📍</span>
+                    <span>Prestigia</span>
+                </div>
+            </div>
+        </a>
+        <a href="la trattoria.html" class="restaurant-card" data-cuisine="italien">
+            <div class="card-image-container">
+                <img src="images/la trattoria.jpg" alt="La Trattoria" class="card-image">
+                <button class="favorite-btn">⭐</button>
+            </div>
+            <div class="card-content">
+                <div class="card-header">
+                    <h3 class="card-title">La Trattoria</h3>
+                </div>
+                <div class="card-meta">
+                    <span class="cuisine-type">Italien</span>
+                    <span class="price-range">$ $ $</span>
+                </div>
+                <p class="card-description">
+                    Restaurant italien classique et élégant. Profitez d'un menu varié de pâtes et de desserts
+                    italiens dans un cadre romantique.
+                </p>
+                <div class="card-footer">
+                    <span class="location-icon">📍</span>
+                    <span>Rue Mohammed el Beqal</span>
+                </div>
+            </div>
+        </a>
+        <a href="kepasta.html" class="restaurant-card" data-cuisine="italien">
+            <div class="card-image-container">
+                <img src="images/kepassta.jpg" alt="ke-Pasta" class="card-image">
+                <button class="favorite-btn">⭐</button>
+            </div>
+            <div class="card-content">
+                <div class="card-header">
+                    <h3 class="card-title">ke-Pasta</h3>
+                </div>
+                <div class="card-meta">
+                    <span class="cuisine-type">Italien</span>
+                    <span class="price-range">$ $ $</span>
+                </div>
+                <p class="card-description">
+                    Restaurant italien classique et élégant. Profitez d'un menu varié de pâtes et de desserts
+                    italiens dans un cadre romantique.
+                </p>
+                <div class="card-footer">
+                    <span class="location-icon">📍</span>
+                    <span>Amarchiche</span>
+                </div>
+            </div>
+        </a>
+        <a href="la casa napoli.html" class="restaurant-card" data-cuisine="italien">
+            <div class="card-image-container">
+                <img src="images/la casa.webp" alt="La Casa Napoli" class="card-image">
+                <button class="favorite-btn">⭐</button>
+            </div>
+            <div class="card-content">
+                <div class="card-header">
+                    <h3 class="card-title">La Casa Napoli</h3>
+                </div>
+                <div class="card-meta">
+                    <span class="cuisine-type">Italien</span>
+                    <span class="price-range">$ $ $</span>
+                </div>
+                <p class="card-description">
+                    Restaurant italien classique et élégant. Profitez d'un menu varié de pâtes et de desserts
+                    italiens dans un cadre romantique.
+                </p>
+                <div class="card-footer">
+                    <span class="location-icon">📍</span>
+                    <span>TARGA</span>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const restaurantCards = document.querySelectorAll('.restaurant-card');
+            const searchInput = document.querySelector('.search-input');
+
+            /* ---------------- 1. FUNCTION DE BASE DE FILTRAGE/RECHERCHE ---------------- */
+            function applyFilter(filterValue) {
+                const searchVal = searchInput.value.toLowerCase().trim();
+
+                restaurantCards.forEach(card => {
+                    const title = card.querySelector('.card-title').textContent.toLowerCase();
+                    // On utilise le 'data-cuisine' pour le filtre Cuisine
+                    const cuisine = card.dataset.cuisine?.toLowerCase() || "";
+                    const location = card.querySelector('.card-footer span:last-child').textContent.toLowerCase();
+
+                    // Logique pour le filtre par bouton : doit correspondre exactement au data-filter
+                    let isCuisineMatch = filterValue === "tous" || cuisine === filterValue;
+
+                    // Logique pour la recherche par input (Nom, Cuisine ou Localisation)
+                    // Si la barre de recherche est vide, on considère que c'est un match (isSearchMatch = true)
+                    let isSearchMatch = !searchVal ||
+                        title.includes(searchVal) ||
+                        cuisine.includes(searchVal) ||
+                        location.includes(searchVal);
+
+                    // Afficher si c'est un match de cuisine ET un match de recherche
+                    if (isCuisineMatch && isSearchMatch) {
+                        card.classList.remove('hidden');
+                    } else {
+                        card.classList.add('hidden');
+                    }
+                });
+            }
+
+            /* ---------------- 2. GESTION DES BOUTONS FILTRES ---------------- */
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Supprime la classe 'active' de tous les boutons
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    // Ajoute 'active' au bouton cliqué
+                    button.classList.add('active');
+
+                    const filterValue = button.dataset.filter.toLowerCase();
+                    searchInput.value = ""; // Efface la barre de recherche lors du filtrage par bouton
+                    applyFilter(filterValue);
+                });
+            });
+
+            /* ---------------- 3. GESTION DE LA BARRE DE RECHERCHE ---------------- */
+            searchInput.addEventListener('input', e => {
+                // Définit le filtre "Tous" comme actif pendant la recherche
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                document.querySelector('[data-filter="tous"]').classList.add('active');
+
+                // Utilise le filtre "tous" car la logique de recherche est déjà gérée dans applyFilter
+                applyFilter("tous");
+            });
+
+            /* ---------------- 4. RECHERCHE AUTOMATIQUE DEPUIS L'URL (index.html) ---------------- */
+            const urlParams = new URLSearchParams(window.location.search);
+            const initialQuery = urlParams.get('query');
+
+            if (initialQuery) {
+                // 1. Décode et insère le terme de recherche dans le champ
+                const decodedQuery = decodeURIComponent(initialQuery);
+                searchInput.value = decodedQuery;
+
+                // 2. Déclenche la recherche
+                searchInput.dispatchEvent(new Event('input'));
+            } else {
+                // S'il n'y a pas de recherche dans l'URL, applique le filtre par défaut ("Tous")
+                applyFilter("tous");
+            }
+        });
+    </script>
+</body>
+
+</html>
